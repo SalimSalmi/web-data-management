@@ -16,8 +16,6 @@ class GenreSerializer(serializers.HyperlinkedModelSerializer):
 
 class ActorSerializer(serializers.HyperlinkedModelSerializer):
 
-
-
     class Meta:
         model = Actors
         fields = '__all__'

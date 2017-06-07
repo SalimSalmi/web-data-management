@@ -7,7 +7,7 @@ class MovieViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    # queryset = Movies.objects.filter(title="Star Wars: The Last Jedi")
+    queryset = Movies.objects.filter(title="Star Wars: The Last Jedi")
     serializer_class = MovieSerializer
 
 
