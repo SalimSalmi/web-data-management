@@ -39,26 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api'
-    # 'api.models.ActedIn',
-    # 'api.models.Actors',
-    # 'api.models.AkaNames',
-    # 'api.models.AkaTitles',
-    # 'api.models.AuthGroup',
-    # 'api.models.AuthGroupPermissions',
-    # 'api.models.AuthPermission',
-    # 'api.models.AuthUser',
-    # 'api.models.AuthUserGroups',
-    # 'api.models.AuthUserUserPermissions',
-    # 'api.models.DjangoAdminLog',
-    # 'api.models.DjangoContentType',
-    # 'api.models.DjangoMigrations',
-    # 'api.models.DjangoSession',
-    # 'api.models.Genres',
-    # 'api.models.Keywords',
-    # 'api.models.Movies',
-    # 'api.models.MoviesGenres',
-    # 'api.models.MoviesKeywords',
-    # 'api.models.Series',
 ]
 
 MIDDLEWARE = [

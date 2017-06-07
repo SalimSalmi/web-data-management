@@ -1,8 +1,9 @@
-from api.models import Movies, Genres
+from api.models import Movies, Genres, Actors
 from rest_framework import serializers
 
 
 class MovieSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = Movies
         fields = ('title', 'year', 'type')
@@ -11,4 +12,12 @@ class MovieSerializer(serializers.HyperlinkedModelSerializer):
 class GenreSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Genres
-        fields = ('genre')
+        fields = ('genre',)
+
+class ActorSerializer(serializers.HyperlinkedModelSerializer):
+
+
+
+    class Meta:
+        model = Actors
+        fields = '__all__'
