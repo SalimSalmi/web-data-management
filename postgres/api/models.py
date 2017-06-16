@@ -10,17 +10,6 @@ from __future__ import unicode_literals
 from django.db import models
 
 
-class ActedIn(models.Model):
-    idacted_in = models.AutoField(primary_key=True)
-    idmovies = models.IntegerField()
-    idseries = models.IntegerField(blank=True, null=True)
-    idactors = models.IntegerField()
-    character = models.CharField(max_length=2047, blank=True, null=True)
-    billing_position = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'acted_in'
 
 
 class Actors(models.Model):
@@ -30,6 +19,12 @@ class Actors(models.Model):
     mname = models.CharField(max_length=1023, blank=True, null=True)
     gender = models.IntegerField(blank=True, null=True)
     number = models.IntegerField(blank=True, null=True)
+
+    movies = models.ManyToManyField(
+        'Movies',
+        through = 'ActedIn',
+        related_name = 'movies'
+        )
 
     class Meta:
         managed = False
@@ -195,20 +190,21 @@ class Movies(models.Model):
     location = models.CharField(max_length=63, blank=True, null=True)
     language = models.CharField(max_length=63, blank=True, null=True)
 
+    actors = models.ManyToManyField(
+        'Actors',
+        through = 'ActedIn',
+        related_name = 'actors'
+    )
+
+    genres = models.ManyToManyField(
+        'Genres',
+        through = 'MoviesGenres',
+        related_name = 'genres'
+    )
+
     class Meta:
         managed = False
         db_table = 'movies'
-
-
-class MoviesGenres(models.Model):
-    idmovies_genres = models.AutoField(primary_key=True)
-    idmovies = models.IntegerField()
-    idgenres = models.IntegerField()
-    idseries = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'movies_genres'
 
 
 class MoviesKeywords(models.Model):
@@ -232,3 +228,26 @@ class Series(models.Model):
     class Meta:
         managed = False
         db_table = 'series'
+
+class ActedIn(models.Model):
+    idacted_in = models.AutoField(primary_key=True)
+    idseries = models.IntegerField(blank=True, null=True)
+    character = models.CharField(max_length=2047, blank=True, null=True)
+    billing_position = models.IntegerField(blank=True, null=True)
+
+    idmovies = models.ForeignKey('Movies', db_column="idmovies", on_delete=models.CASCADE)
+    idactors = models.ForeignKey('Actors', db_column="idactors", on_delete=models.CASCADE)
+
+    class Meta:
+        managed = False
+        db_table = 'acted_in'
+
+class MoviesGenres(models.Model):
+    idmovies_genres = models.AutoField(primary_key=True)
+    idmovies = models.ForeignKey('Movies', db_column="idmovies", on_delete=models.CASCADE)
+    idgenres = models.ForeignKey('Genres', db_column="idgenres", on_delete=models.CASCADE)
+    idseries = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'movies_genres'

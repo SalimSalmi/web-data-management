@@ -1,14 +1,24 @@
 from api.models import Movies, Genres, Actors
 from rest_framework import viewsets
 from api.serializers import MovieSerializer, GenreSerializer, ActorSerializer
+from rest_framework import generics
 
 
 class MovieViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    queryset = Movies.objects.filter(title="Star Wars: The Last Jedi")
+    # queryset = Movies.objects.filter(title__contains="Star Wars",type=3)
     serializer_class = MovieSerializer
+
+    def get_queryset(self):
+        name = self.request.query_params.get('name', None)
+        idmovies = self.request.query_params.get('id', None)
+
+        if(idmovies):
+            return Movies.objects.filter(idmovies=idmovies,type=3)
+        else:
+            return Movies.objects.filter(title__contains=name,type=3)
 
 
 class GenreViewSet(viewsets.ModelViewSet):
@@ -19,9 +29,18 @@ class GenreViewSet(viewsets.ModelViewSet):
     serializer_class = GenreSerializer
 
 
-class ActorFromMovieViewSet(viewsets.ModelViewSet):
-    queryset = Actors.objects.all()
+class ActorViewSet(viewsets.ModelViewSet):
     serializer_class = ActorSerializer
+
+    def get_queryset(self):
+        fname = self.request.query_params.get('fname', None)
+        lname = self.request.query_params.get('lname', None)
+        idactors = self.request.query_params.get('id', None)
+
+        if(idactors):
+            return Actors.objects.filter(idactors=idactors,type=3)
+        else:
+            return Actors.objects.filter(fname=fname,lname=lname)
 
 
 # SELECT  m.year, m.language, a.fname, a.lname, ai.character
