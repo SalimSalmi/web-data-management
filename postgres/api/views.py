@@ -1,6 +1,6 @@
 from api.models import Movies, Genres, Actors
 from rest_framework import viewsets
-from api.serializers import MovieSerializer, GenreSerializer, ActorSerializer
+from api.serializers import MovieSerializer, GenreSerializer, ActorDetailsSerializer, ActorStatsSerializer, GenreExpSerializer, GenreStatsSerializer
 from rest_framework import generics
 
 
@@ -29,8 +29,8 @@ class GenreViewSet(viewsets.ModelViewSet):
     serializer_class = GenreSerializer
 
 
-class ActorViewSet(viewsets.ModelViewSet):
-    serializer_class = ActorSerializer
+class ActorDetailsViewSet(viewsets.ModelViewSet):
+    serializer_class = ActorDetailsSerializer
 
     def get_queryset(self):
         fname = self.request.query_params.get('fname', None)
@@ -43,6 +43,31 @@ class ActorViewSet(viewsets.ModelViewSet):
             return Actors.objects.filter(fname=fname,lname=lname)
 
 
-# SELECT  m.year, m.language, a.fname, a.lname, ai.character
-# FROM movies m JOIN acted_in ai ON (ai.idmovies=m.idmovies) JOIN actors a ON (a.idactors=ai.idactors)
-# WHERE (m.idmovies = 396962 OR m.title LIKE '%Terminator%') AND TYPE=3 ORDER BY  ai.billing_position;
+class ActorStatsViewSet(viewsets.ModelViewSet):
+    serializer_class = ActorStatsSerializer
+
+    def get_queryset(self):
+        fname = self.request.query_params.get('fname', None)
+        lname = self.request.query_params.get('lname', None)
+        idactors = self.request.query_params.get('id', None)
+
+        if(idactors):
+            return Actors.objects.filter(idactors=idactors,type=3)
+        else:
+            return Actors.objects.filter(fname=fname,lname=lname)
+
+class GenreExpViewSet(viewsets.ModelViewSet):
+    serializer_class = GenreExpSerializer
+
+    def get_queryset(self):
+        genre = self.request.query_params.get('genre', None)
+
+        return Genres.objects.filter(genre=genre)
+
+class GenreStatsViewSet(viewsets.ModelViewSet):
+    serializer_class = GenreStatsSerializer
+
+    def get_queryset(self):
+        genre = self.request.query_params.get('genre', None)
+
+        return Genres.objects.filter(genre=genre)

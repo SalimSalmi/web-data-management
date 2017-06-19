@@ -28,7 +28,10 @@ from api import views
 router = routers.DefaultRouter()
 router.register(r'movies', views.MovieViewSet, 'moviedetails')
 router.register(r'genres', views.GenreViewSet)
-router.register(r'actors', views.ActorViewSet, 'actordetails')
+router.register(r'actors/details', views.ActorDetailsViewSet, 'actordetails')
+router.register(r'actors/stats', views.ActorStatsViewSet, 'actorstats')
+router.register(r'genre/explore', views.GenreExpViewSet, 'genreexplore')
+router.register(r'genre/stats', views.GenreStatsViewSet, 'genrestats')
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
