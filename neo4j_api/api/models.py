@@ -32,7 +32,7 @@ class Genre(StructuredNode):
 class Movie(StructuredNode):
     idmovies = UniqueIdProperty()
     title = StringProperty()
-    year = IntegerProperty()
+    year = StringProperty()
     number = IntegerProperty()
     type = StringProperty()
     location = StringProperty()

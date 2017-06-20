@@ -25,60 +25,45 @@ class MovieSerializer(serializers.Serializer):
     actors = MovieActorSerializer(many=True)
 
 
-
 #         Scenario 2
 # ---------------------------
 
 class ActorMovieSerializer(serializers.Serializer):
-
-    class Meta:
-        model = Movie
-        fields = ('idmovies', 'title', 'year',)
-        ordering = ('year',)
+    idmovies = serializers.IntegerField()
+    title = serializers.CharField()
+    year = serializers.IntegerField()
 
 class ActorDetailsSerializer(serializers.Serializer):
+    fname = serializers.CharField()
+    lname = serializers.CharField()
+    mname = serializers.CharField()
     movies = ActorMovieSerializer(many=True)
-
-    class Meta:
-        model = Actor
-        fields = ('fname','lname', 'movies')
-        depth = 1
 
 
 #         Scenario 3
 # ---------------------------
 
 class ActorStatsSerializer(serializers.Serializer):
+    fname = serializers.CharField()
+    lname = serializers.CharField()
+    mname = serializers.CharField()
     movies_count = serializers.SerializerMethodField()
-    
-
-    class Meta:
-        model = Actor
-        fields = ('fname','lname', 'movies_count')
-        depth = 1
 
     def get_movies_count(self, obj):
-        return obj.movies.count()
+        return len(obj.movies)
 
 
 #         Scenario 4
 # ---------------------------
 
 class MovieGenreSerializer(serializers.Serializer):
-    class Meta:
-        model = Movie
-        fields = ('idmovies', 'title',)
-        depth = 1
-
+    idmovies = serializers.IntegerField()
+    title = serializers.CharField()
 
 class GenreExpSerializer(serializers.Serializer):
-    movies = serializers.SerializerMethodField()
     year = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Genre
-        fields = ('genre', 'movies', 'year')
-        depth = 1
+    genre = serializers.CharField()
+    movies = serializers.SerializerMethodField()
 
     def get_movies(self, obj):
         year = self.context['request'].query_params.get('year', None)
@@ -94,18 +79,15 @@ class GenreExpSerializer(serializers.Serializer):
 # ---------------------------
 
 class GenreStatsSerializer(serializers.Serializer):
-    movies_count = serializers.SerializerMethodField()
     year = serializers.SerializerMethodField()
+    genre = serializers.CharField()
+    movies_count = serializers.SerializerMethodField()
 
-    class Meta:
-        model = Genre
-        fields = ('genre', 'movies_count', 'year')
-        depth = 1
 
     def get_movies_count(self, obj):
         year = self.context['request'].query_params.get('year', None)
         qs = Movie.nodes.filter(year=year)
-        return qs.count()
+        return len(qs)
 
     def get_year(self, obj):
         return self.context['request'].query_params.get('year', None)
