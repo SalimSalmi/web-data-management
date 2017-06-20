@@ -1,4 +1,4 @@
-from api.models import Movies, Genres, Actors
+from api.models import Movies, Actors,Genres
 from rest_framework import viewsets
 from api.serializers import MovieSerializer, GenreSerializer, ActorDetailsSerializer, ActorStatsSerializer, GenreExpSerializer, GenreStatsSerializer
 from rest_framework import generics
@@ -16,17 +16,10 @@ class MovieViewSet(viewsets.ModelViewSet):
         idmovies = self.request.query_params.get('id', None)
 
         if(idmovies):
-            return Movies.objects.filter(idmovies=idmovies,type=3)
+            return Movies.objects(idmovies=idmovies,type=3)
         else:
-            return Movies.objects.filter(title__icontains=name,type=3)
+            return Movies.objects(title__icontains=name,type=3)
 
-
-class GenreViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Genres.objects.all()
-    serializer_class = GenreSerializer
 
 
 class ActorDetailsViewSet(viewsets.ModelViewSet):
