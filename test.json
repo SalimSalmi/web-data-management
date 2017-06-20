@@ -12,20 +12,24 @@ db.actors.insert({"idactors": 5, "lname":"lname5", "fname":"fname5", "mname":"mn
 
 
 
-db.genres.insert("idgenres":1, "genre":"genre1", "movies": [1,2])
-db.genres.insert("idgenres":2, "genre":"genre2", "movies": [1,3])
-db.genres.insert("idgenres":3, "genre":"genre3", "movies": [2,4])
-db.genres.insert("idgenres":4, "genre":"genre4", "movies": [5])
-db.genres.insert("idgenres":5, "genre":"genre5", "movies": [4])
+db.genres.insert({"idgenres":1, "genre":"genre1", "movies": ["594923cb948fbe75021a27a7","594923d2948fbe75021a27a8","594923d6948fbe75021a27a9"]})
 
+movies
+594923cb948fbe75021a27a7
+594923d2948fbe75021a27a8
+594923d6948fbe75021a27a9
+594923db948fbe75021a27aa
+594923df948fbe75021a27ab
 
+genres
+59493769948fbe75021a27b1
+5949376e948fbe75021a27b2
 
-
-db.movies.update({"idmovies":1},{"idmovies":1, "title":"movie1", "year":1998, "number":1, "type":3, "location":"location1", "language":"eng", "genres":[{"genre":"genre1"}, {"genre":"genre2"}], "actors":["594923e8948fbe75021a27ad","594923ec948fbe75021a27ae"]})
-db.movies.update({"idmovies":2},{"idmovies":2, "title":"movie2", "year":2000, "number":2, "type":3, "location":"location2", "language":"eng", "genres":[{"genre":"genre1"}, {"genre":"genre3"}],"actors":["594923e4948fbe75021a27ac","594923f1948fbe75021a27af"]})
-db.movies.update({"idmovies":3},{"idmovies":3, "title":"movie3", "year":2016, "number":3, "type":3, "location":"location3", "language":"eng", "genres":[{"genre":"genre2"}],"actors":["594923e4948fbe75021a27ac","594923e8948fbe75021a27ad"]})
-db.movies.update({"idmovies":4},{"idmovies":4, "title":"movie4", "year":2006, "number":4, "type":3, "location":"location4", "language":"eng", "genres":[{"genre":"genre3"},{"genre":"genre5"}],"actors":["594923f4948fbe75021a27b0"]})
-db.movies.update({"idmovies":5},{"idmovies":5, "title":"movie5", "year":2013, "number":5, "type":3, "location":"location5", "language":"eng", "genres":[{"genre":"genre5"}],"actors":["594923f1948fbe75021a27af"]})
+db.movies.update({"idmovies":1},{"idmovies":1, "title":"movie1", "year":1998, "number":1, "type":3, "location":"location1", "language":"eng", "genres":["59493769948fbe75021a27b1"], "actors":["594923e8948fbe75021a27ad","594923ec948fbe75021a27ae"]})
+db.movies.update({"idmovies":2},{"idmovies":2, "title":"movie2", "year":2000, "number":2, "type":3, "location":"location2", "language":"eng", "genres":["59493769948fbe75021a27b1"],"actors":["594923e4948fbe75021a27ac","594923f1948fbe75021a27af"]})
+db.movies.update({"idmovies":3},{"idmovies":3, "title":"movie3", "year":2016, "number":3, "type":3, "location":"location3", "language":"eng", "genres":["59493769948fbe75021a27b1"],"actors":["594923e4948fbe75021a27ac","594923e8948fbe75021a27ad"]})
+db.movies.update({"idmovies":4},{"idmovies":4, "title":"movie4", "year":2006, "number":4, "type":3, "location":"location4", "language":"eng", "genres":["59493769948fbe75021a27b1"],"actors":["594923f4948fbe75021a27b0"]})
+db.movies.update({"idmovies":5},{"idmovies":5, "title":"movie5", "year":2013, "number":5, "type":3, "location":"location5", "language":"eng", "genres":["59493769948fbe75021a27b1"],"actors":["594923f1948fbe75021a27af"]})
 
 db.actors.update({"idactors":1},{"idactors": 1, "lname":"lname1", "fname":"fname1", "mname":"mname1", "gender": 0 , "number" :1,"movies":["594923d2948fbe75021a27a8","594923d6948fbe75021a27a9"]})
 db.actors.update({"idactors":2},{"idactors": 2, "lname":"lname2", "fname":"fname2", "mname":"mname2", "gender": 0, "number" : 2, "movies":["594923cb948fbe75021a27a7","594923d6948fbe75021a27a9"]})

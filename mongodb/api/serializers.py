@@ -67,7 +67,6 @@ class MovieGenreSerializer(mongoserializers.DocumentSerializer):
     class Meta:
         model = Movies
         fields = ('idmovies', 'title',)
-        depth = 1
 
 
 class GenreExpSerializer(mongoserializers.DocumentSerializer):
@@ -77,16 +76,16 @@ class GenreExpSerializer(mongoserializers.DocumentSerializer):
     class Meta:
         model = Genres
         fields = ('genre', 'movies', 'year')
-        depth = 1
-
-    def get_movies(self, obj):
-        year = self.context['request'].query_params.get('year', None)
-        qs = Movies.objects.filter(year=year)
-        serializer = MovieGenreSerializer(instance=qs, many=True)
-        return serializer.data
 
     def get_year(self, obj):
         return self.context['request'].query_params.get('year', None)
+
+    def get_movies(self, obj):
+        year = self.context['request'].query_params.get('year', None)
+        m = [movie for movie in obj.movies if movie.year == int(year)]
+        serializer = MovieGenreSerializer(instance=m, many=True)
+        return serializer.data
+
 
 
 #         Scenario 5
@@ -99,12 +98,11 @@ class GenreStatsSerializer(mongoserializers.DocumentSerializer):
     class Meta:
         model = Genres
         fields = ('genre', 'movies_count', 'year')
-        depth = 1
 
     def get_movies_count(self, obj):
         year = self.context['request'].query_params.get('year', None)
-        qs = Movies.objects.filter(year=year)
-        return count(qs)
+        m = [movie for movie in obj.movies if movie.year == int(year)]
+        return len(m)
 
     def get_year(self, obj):
         return self.context['request'].query_params.get('year', None)

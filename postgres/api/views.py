@@ -62,7 +62,7 @@ class GenreExpViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         genre = self.request.query_params.get('genre', None)
 
-        return Genres.objects.filter(genre_icontains=genre)
+        return Genres.objects.filter(genre__icontains=genre)
 
 class GenreStatsViewSet(viewsets.ModelViewSet):
     serializer_class = GenreStatsSerializer
@@ -70,4 +70,4 @@ class GenreStatsViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         genre = self.request.query_params.get('genre', None)
 
-        return Genres.objects.filter(genre_icontains=genre)
+        return Genres.objects.filter(genre__icontains=genre)

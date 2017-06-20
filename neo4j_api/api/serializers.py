@@ -67,7 +67,7 @@ class GenreExpSerializer(serializers.Serializer):
 
     def get_movies(self, obj):
         year = self.context['request'].query_params.get('year', None)
-        qs = Movie.nodes.filter(year=year)
+        qs = obj.movies.filter(year=year)
         serializer = MovieGenreSerializer(instance=qs, many=True)
         return serializer.data
 
@@ -86,7 +86,7 @@ class GenreStatsSerializer(serializers.Serializer):
 
     def get_movies_count(self, obj):
         year = self.context['request'].query_params.get('year', None)
-        qs = Movie.nodes.filter(year=year)
+        qs = obj.movies.filter(year=year)
         return len(qs)
 
     def get_year(self, obj):

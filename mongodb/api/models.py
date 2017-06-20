@@ -21,8 +21,11 @@ class Actors(Document):
     movies = fields.ListField(fields.ReferenceField('Movies'))
 
 
-class Genres(EmbeddedDocument):
+class Genres(Document):
+    idgenres = fields.IntField()
     genre = fields.StringField()
+    movies = fields.ListField(fields.ReferenceField('Movies'))
+
 
 class Movies(Document):
     idmovies = fields.IntField()
@@ -34,7 +37,7 @@ class Movies(Document):
     language = fields.StringField()
 
     actors = fields.ListField(fields.ReferenceField('Actors'))
-    genres = fields.EmbeddedDocumentListField(Genres)
+    genres = fields.ListField(fields.ReferenceField('Genres'))
 
 
 #

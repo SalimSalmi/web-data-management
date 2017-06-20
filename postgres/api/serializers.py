@@ -83,7 +83,7 @@ class GenreExpSerializer(serializers.HyperlinkedModelSerializer):
 
     def get_movies(self, obj):
         year = self.context['request'].query_params.get('year', None)
-        qs = Movies.objects.filter(year=year)
+        qs = obj.movies.filter(year=year)
         serializer = MovieGenreSerializer(instance=qs, many=True)
         return serializer.data
 
@@ -101,11 +101,10 @@ class GenreStatsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Genres
         fields = ('genre', 'movies_count', 'year')
-        depth = 1
 
     def get_movies_count(self, obj):
         year = self.context['request'].query_params.get('year', None)
-        qs = Movies.objects.filter(year=year)
+        qs = obj.movies.filter(year=year)
         return qs.count()
 
     def get_year(self, obj):
