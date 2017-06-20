@@ -1,4 +1,4 @@
-from api.models import Movies, Genres, Actors, ActedIn
+from api.models import Movie, Genre, Actor
 from rest_framework import serializers
 
 
@@ -6,43 +6,41 @@ from rest_framework import serializers
 #         Scenario 1
 # ---------------------------
 
-class MovieActorSerializer(serializers.HyperlinkedModelSerializer):
+class MovieActorSerializer(serializers.Serializer):
+    fname = serializers.CharField()
+    lname = serializers.CharField()
+    mname = serializers.CharField()
 
-    class Meta:
-        model = Actors
-        fields = ('fname','lname','mname')
+class GenreSerializer(serializers.Serializer):
+    genre = serializers.CharField()
 
-class GenreSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Genres
-        fields = ('idgenres', 'genre',)
+class MovieSerializer(serializers.Serializer):
+    idmovies = serializers.IntegerField()
+    title = serializers.CharField()
+    year = serializers.IntegerField()
+    language = serializers.CharField()
+    location = serializers.CharField()
 
-class MovieSerializer(serializers.HyperlinkedModelSerializer):
     genres = GenreSerializer(many=True)
     actors = MovieActorSerializer(many=True)
-
-    class Meta:
-        model = Movies
-        fields = ('idmovies', 'title', 'year', 'language', 'genres', 'location', 'actors')
-        depth = 1
 
 
 
 #         Scenario 2
 # ---------------------------
 
-class ActorMovieSerializer(serializers.HyperlinkedModelSerializer):
+class ActorMovieSerializer(serializers.Serializer):
 
     class Meta:
-        model = Movies
+        model = Movie
         fields = ('idmovies', 'title', 'year',)
         ordering = ('year',)
 
-class ActorDetailsSerializer(serializers.HyperlinkedModelSerializer):
+class ActorDetailsSerializer(serializers.Serializer):
     movies = ActorMovieSerializer(many=True)
 
     class Meta:
-        model = Actors
+        model = Actor
         fields = ('fname','lname', 'movies')
         depth = 1
 
@@ -50,11 +48,12 @@ class ActorDetailsSerializer(serializers.HyperlinkedModelSerializer):
 #         Scenario 3
 # ---------------------------
 
-class ActorStatsSerializer(serializers.HyperlinkedModelSerializer):
+class ActorStatsSerializer(serializers.Serializer):
     movies_count = serializers.SerializerMethodField()
+    
 
     class Meta:
-        model = Actors
+        model = Actor
         fields = ('fname','lname', 'movies_count')
         depth = 1
 
@@ -65,25 +64,25 @@ class ActorStatsSerializer(serializers.HyperlinkedModelSerializer):
 #         Scenario 4
 # ---------------------------
 
-class MovieGenreSerializer(serializers.HyperlinkedModelSerializer):
+class MovieGenreSerializer(serializers.Serializer):
     class Meta:
-        model = Movies
+        model = Movie
         fields = ('idmovies', 'title',)
         depth = 1
 
 
-class GenreExpSerializer(serializers.HyperlinkedModelSerializer):
+class GenreExpSerializer(serializers.Serializer):
     movies = serializers.SerializerMethodField()
     year = serializers.SerializerMethodField()
 
     class Meta:
-        model = Genres
+        model = Genre
         fields = ('genre', 'movies', 'year')
         depth = 1
 
     def get_movies(self, obj):
         year = self.context['request'].query_params.get('year', None)
-        qs = Movies.objects.filter(year=year)
+        qs = Movie.nodes.filter(year=year)
         serializer = MovieGenreSerializer(instance=qs, many=True)
         return serializer.data
 
@@ -94,18 +93,18 @@ class GenreExpSerializer(serializers.HyperlinkedModelSerializer):
 #         Scenario 5
 # ---------------------------
 
-class GenreStatsSerializer(serializers.HyperlinkedModelSerializer):
+class GenreStatsSerializer(serializers.Serializer):
     movies_count = serializers.SerializerMethodField()
     year = serializers.SerializerMethodField()
 
     class Meta:
-        model = Genres
+        model = Genre
         fields = ('genre', 'movies_count', 'year')
         depth = 1
 
     def get_movies_count(self, obj):
         year = self.context['request'].query_params.get('year', None)
-        qs = Movies.objects.filter(year=year)
+        qs = Movie.nodes.filter(year=year)
         return qs.count()
 
     def get_year(self, obj):

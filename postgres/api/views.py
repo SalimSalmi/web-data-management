@@ -38,7 +38,7 @@ class ActorDetailsViewSet(viewsets.ModelViewSet):
         idactors = self.request.query_params.get('id', None)
 
         if(idactors):
-            return Actors.objects.filter(idactors=idactors,type=3)
+            return Actors.objects.filter(idactors=idactors)
         else:
             return Actors.objects.filter(fname=fname,lname=lname)
 
@@ -52,7 +52,7 @@ class ActorStatsViewSet(viewsets.ModelViewSet):
         idactors = self.request.query_params.get('id', None)
 
         if(idactors):
-            return Actors.objects.filter(idactors=idactors,type=3)
+            return Actors.objects.filter(idactors=idactors)
         else:
             return Actors.objects.filter(fname=fname,lname=lname)
 

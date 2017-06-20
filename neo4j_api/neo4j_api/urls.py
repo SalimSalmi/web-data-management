@@ -27,7 +27,6 @@ from api import views
 
 router = routers.DefaultRouter()
 router.register(r'movies', views.MovieViewSet, 'moviedetails')
-router.register(r'genres', views.GenreViewSet)
 router.register(r'actors/details', views.ActorDetailsViewSet, 'actordetails')
 router.register(r'actors/stats', views.ActorStatsViewSet, 'actorstats')
 router.register(r'genre/explore', views.GenreExpViewSet, 'genreexplore')

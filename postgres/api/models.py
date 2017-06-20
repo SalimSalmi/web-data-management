@@ -9,9 +9,6 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-
-
-
 class Actors(models.Model):
     idactors = models.IntegerField(primary_key=True)
     lname = models.CharField(max_length=1023, blank=True, null=True)
